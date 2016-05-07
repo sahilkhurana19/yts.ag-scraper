@@ -6,7 +6,9 @@ response = requests.get(url)
 html = response.content
 
 soup = BeautifulSoup(html)
-tags = soup.find_all("a", class_='browse-movie-title')
 
-for tag in tags:
-	print tag 
+divtag = soup.select("[class~=content-dark]")
+for tag in divtag:
+	aTag = tag.find_all("a",{'class':'browse-movie-title'})
+	for tag in aTag:
+		print tag.string
