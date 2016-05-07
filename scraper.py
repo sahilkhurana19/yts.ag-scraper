@@ -6,4 +6,7 @@ response = requests.get(url)
 html = response.content
 
 soup = BeautifulSoup(html)
-print soup.prettify()
+tags = soup.find_all("a", class_='browse-movie-title')
+
+for tag in tags:
+	print tag 
