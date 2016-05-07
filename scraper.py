@@ -11,16 +11,9 @@ divtag = soup.select("[class~=content-dark]")
 for tag in divtag:
 	nameTag = tag.find_all("a",{'class':'browse-movie-title'})
 	ratingTag = tag.find_all("h4",{'class':'rating'})
-	"""print nameTag[1].string
-	for tag in nameTag:
-		print tag.string
-	for tag in ratingTag:
-		print tag.string
-	
-	
-	#for tag in ratingTag:
-	#	print tag.string"""
+	yearTag = tag.find_all("div", {'class':'browse-movie-year'})
 
 	for i in range(8):
-		print nameTag[i].string,
-		print ratingTag[i].string
+		print nameTag[i].string, "	" * 3,
+		print ratingTag[i].string, "	" * 4,
+		print yearTag[i].string
