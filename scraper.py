@@ -7,28 +7,23 @@ html = response.content
 
 soup = BeautifulSoup(html)
 
-"""def linkGenerator():
-		downloadMovie = raw_input("Enter the name of the movie from the above movies whose link is required: \n>>> ")
-		for tag in divtag:
-			nameTag = tag.find_all("a",{'class':'browse-movie-title'})
-			yearTag = tag.find_all("div", {'class':'browse-movie-year'})
-		for i in range(8):
-			if nameTag[i].string == downloadMovie:
-				yearAdd = yearTag[i].string
-				print "Movie Found"
-				movieName = nameTag[i].string
-				movieName = movieName.lower()
-				movieName = movieName.replace(" ","-")
-				#search = 
-				#searcher = "".join(letter for letter in movieName if letter.isalnum())
-				#print searcher
-				print movieName
-				print yearAdd
-				break
-			elif(i == 7):
-				print "Input Error"
-"""
-
+def linkGenerator():
+	for tag in divtag:
+		nameTag = tag.find_all("a",{'class':'browse-movie-title'})
+		yearTag = tag.find_all("div", {'class':'browse-movie-year'})
+	for i in range(8):
+		if nameTag[i].string == downloadMovie:
+			yearAdd = yearTag[i].string
+			movieName = nameTag[i].string
+			movieName = movieName.lower()
+			movieName = movieName.replace(":","-")
+			movieName = movieName.replace(" ","-")
+			movieName = movieName.replace("--","-")
+			newUrl = movieName + "-" + yearAdd
+			break
+		elif(i == 7):
+			print "Input Error"
+	return newUrl
 
 divtag = soup.select("[class~=content-dark]")
 for tag in divtag:
@@ -37,23 +32,31 @@ for tag in divtag:
 	yearTag = tag.find_all("div", {'class':'browse-movie-year'})
 
 	for i in range(8):
-		print nameTag[i].string, "	" * 3,
-		print ratingTag[i].string, "	" * 4,
-		print yearTag[i].string
+		print "Movie Title:", nameTag[i].string
+		print "IMDB Rating:", ratingTag[i].string
+		print "Year of release:", yearTag[i].string
+		print "*" * 20
 
 choice = raw_input("Do you want the link of any of the above movies?(Y/N)\n>>> ")
 choice = choice.lower()
-#if(choice == 'y'):
-#	linkGenerator()
-#else:
-#	print "That will be all folks."
-
 if(choice == 'y'):
 	downloadMovie = raw_input("Enter the name of the movie from the above movies whose link is required: \n>>> ")
 	for tag in divtag:
 		linkTag = tag.find_all("a",{'rel':'nofollow'},text='720p')
 		for i in range(8):
-			#print linkTag[i]
 			if(nameTag[i].string == downloadMovie):
-					print linkTag[i].get('href')
-			
+				print
+				print linkTag[i].get('href')
+
+
+newUrl = linkGenerator()
+newUrl = "https://yts.ag/movie/" + newUrl
+
+newResponse = requests.get(newUrl)
+newHtml = newResponse.content
+newSoup = BeautifulSoup(newHtml)
+
+SynopsisTag = newSoup.select("#synopsis")
+for tag in SynopsisTag:
+	synopsis = tag.find("p",{'class':'hidden-md'})
+	print "\nSynopsis:\n" + synopsis.string
