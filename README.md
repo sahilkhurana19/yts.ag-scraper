@@ -1,5 +1,10 @@
 # yts.ag-scraper
 
-A python script to scrape the famous yts.ag page which is used extensively to download English movies. The script at its current state returns the list of the recently uploaded movies on the page along with its IMDB rating and year of release. Enter one the names in the terminal and a torrent download link will be provided to you.
+A python script to scrape the famous yts.ag page which is used extensively to download English movies. The script displays the list of recent movies from the home page along with their IMDB rating and year of release. Upon entering the movie, a torrent download link will be generated succeeded by the synopsis of the movie. 
 
-#More features incoming!!
+#Dependencies
+1. BeautifulSoup
+2. Requests
+
+#Steps:
+Run the scraper.py script from your terminal and follow the on-screen instructions.
